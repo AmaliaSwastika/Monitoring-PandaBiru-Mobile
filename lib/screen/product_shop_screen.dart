@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:panda_biru/model/product_shop_model.dart';
 import 'package:panda_biru/model/store_model.dart';
+import 'package:panda_biru/screen/detail_shop_Screen.dart';
 import 'package:panda_biru/services/product_shop_api.dart';
 
 class ProductShopScreen extends StatefulWidget {
@@ -30,19 +31,31 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
   }
 
   Future<void> _submitReport() async {
-    try {
-      final success = await _productService.submitProductReport(storeId, products);
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Laporan produk berhasil dikirim!")),
-        );
-      }
-    } catch (e) {
+  try {
+    final success = await _productService.submitProductReport(storeId, products);
+    if (success) {
+      // Tampilkan snackbar
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
+        const SnackBar(content: Text("Laporan produk berhasil dikirim!")),
       );
+
+      // Arahkan ke DetailShopScreen, sambil mengganti halaman saat ini
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DetailShopScreen(store: widget.store),
+          ),
+        );
+      });
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
