@@ -11,17 +11,19 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String? _username;
+  String? _email;
 
   @override
   void initState() {
     super.initState();
-    _loadUsername();
+    _loadUserData();
   }
 
-  Future<void> _loadUsername() async {
+  Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _username = prefs.getString('username');
+      _email = prefs.getString('email');
     });
   }
 
@@ -29,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('username');
     await prefs.remove('token');
+    await prefs.remove('email');
 
     // Navigasi ke LoginScreen dan hilangkan semua screen sebelumnya
     if (!mounted) return;
@@ -51,6 +54,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 "Halo, $_username!",
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            if (_email != null)
+              Text(
+                "Email: $_email",
+                style: const TextStyle(fontSize: 18, color: Colors.grey),
               ),
             const SizedBox(height: 20),
             ElevatedButton(

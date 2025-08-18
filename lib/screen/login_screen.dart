@@ -32,20 +32,23 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text,
     );
 
-    // ✅ Print ID dan Token di debug console
+    // ✅ Print ID, Token, dan Email di debug console
     print("Login successfully!");
     print("ID: ${user.id}");
     print("Token: ${user.token}");
+    print("Email: ${user.email}");
 
-    // ✅ Simpan username & token ke SharedPreferences
+    // ✅ Simpan username, token & email ke SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', user.username);
     await prefs.setString('token', user.token);
+    await prefs.setString('email', user.email);
 
-    // ✅ Print konfirmasi simpan di debug console
-    print("Username & Token telah disimpan di SharedPreferences");
+    // ✅ Print konfirmasi simpan
+    print("Username, Token & Email telah disimpan di SharedPreferences");
     print("Username: ${user.username}");
     print("Token: ${user.token}");
+    print("Email: ${user.email}");
 
     // ✅ Navigasi ke NavBar
     if (!mounted) return;
@@ -65,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 }
+
 
 
 
