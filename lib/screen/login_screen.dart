@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panda_biru/model/login_model.dart';
+import 'package:panda_biru/screen/home_screen.dart';
 import 'package:panda_biru/screen/navbar/navbar.dart';
 import 'package:panda_biru/services/login_api.dart';
 
@@ -35,13 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
     print("ID: ${user.id}");
     print("Token: ${user.token}");
 
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const NavBar(),
-      ),
-    );
+   if (!mounted) return;
+Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (_) => NavBar(username: user.username), // kirim username
+  ),
+);
   } catch (e) {
     setState(() {
       _error = e.toString();
