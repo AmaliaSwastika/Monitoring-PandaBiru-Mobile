@@ -3,6 +3,7 @@ import 'package:panda_biru/model/login_model.dart';
 import 'package:panda_biru/screen/home_screen.dart';
 import 'package:panda_biru/screen/navbar/navbar.dart';
 import 'package:panda_biru/services/login_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,13 +37,24 @@ class _LoginScreenState extends State<LoginScreen> {
     print("ID: ${user.id}");
     print("Token: ${user.token}");
 
-   if (!mounted) return;
-Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-    builder: (_) => NavBar(username: user.username), // kirim username
-  ),
-);
+    // ✅ Simpan username & token ke SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', user.username);
+    await prefs.setString('token', user.token);
+
+    // ✅ Print konfirmasi simpan di debug console
+    print("Username & Token telah disimpan di SharedPreferences");
+    print("Username: ${user.username}");
+    print("Token: ${user.token}");
+
+    // ✅ Navigasi ke NavBar
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => NavBar(username: user.username),
+      ),
+    );
   } catch (e) {
     setState(() {
       _error = e.toString();
@@ -53,6 +65,7 @@ Navigator.pushReplacement(
     });
   }
 }
+
 
 
 
