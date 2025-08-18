@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panda_biru/model/login_model.dart';
+import 'package:panda_biru/screen/home_screen.dart';
 import 'package:panda_biru/services/login_api.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,31 +19,41 @@ class _LoginScreenState extends State<LoginScreen> {
   final ApiService _apiService = ApiService();
 
   Future<void> _handleLogin() async {
+  setState(() {
+    _loading = true;
+    _error = null;
+  });
+
+  try {
+    UserModel user = await _apiService.login(
+      _usernameController.text,
+      _passwordController.text,
+    );
+
+    // ✅ Print ID dan Token di debug console
+    print("Login successfully!");
+    print("ID: ${user.id}");
+    print("Token: ${user.token}");
+
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => HomeScreen(username: user.username),
+      ),
+    );
+  } catch (e) {
     setState(() {
-      _loading = true;
-      _error = null;
+      _error = e.toString();
     });
-
-    try {
-      UserModel user = await _apiService.login(
-        _usernameController.text,
-        _passwordController.text,
-      );
-
-      // ✅ Kalau login sukses
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Selamat datang ${user.username}!")),
-      );
-    } catch (e) {
-      setState(() {
-        _error = e.toString();
-      });
-    } finally {
-      setState(() {
-        _loading = false;
-      });
-    }
+  } finally {
+    setState(() {
+      _loading = false;
+    });
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
