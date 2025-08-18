@@ -6,35 +6,39 @@ import 'package:panda_biru/screen/profile_screen.dart';
 import 'package:panda_biru/theme/theme_color.dart';
 
 class NavBar extends StatefulWidget {
-  final String username; // <-- tambahkan
+  final String username;
+  final int initialIndex; // <-- tambahin
 
-  const NavBar({super.key, required this.username}); // wajib dikirim dari LoginScreen
+  const NavBar({
+    super.key,
+    required this.username,
+    this.initialIndex = 0, // default tetap Home
+  });
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
-
 class _NavBarState extends State<NavBar> {
   late List<Widget> halaman;
-  int selectedIndex = 0;
+  late int selectedIndex;
 
   @override
   void initState() {
     super.initState();
+    selectedIndex = widget.initialIndex; // <-- ambil dari parameter
     halaman = [
-      HomeScreen(username: widget.username), // kirim username dari login
+      HomeScreen(username: widget.username),
       const ActivityScreen(),
       const ProfileScreen(),
     ];
   }
 
-  void selectPage(int index){
+  void selectPage(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +52,12 @@ class _NavBarState extends State<NavBar> {
             ),
             label: 'Home',
           ),
-
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage(NavBarImageIcon.activity_NavbarIcon),
             ),
             label: 'Activity',
           ),
-
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage(NavBarImageIcon.profile_NavbarIcon),
