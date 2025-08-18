@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panda_biru/screen/list_shop.dart';
 import 'package:panda_biru/services/attendance_api.dart';
 import 'package:panda_biru/model/attendance_model.dart';
 
@@ -42,6 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _goToShopList() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ListShopScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
               const Text(
                 "Silahkan masuk kerja",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _goToShopList,
+                child: const Text("Daftar Toko"),
+              ),
+            ] else ...[
+              // Kalau belum absen, tombol daftar toko disabled
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,
+                ),
+                child: const Text("Daftar Toko"),
               ),
             ],
           ],
