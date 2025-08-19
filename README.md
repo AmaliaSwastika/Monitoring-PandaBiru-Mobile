@@ -1,3 +1,9 @@
+# Panduan Menjalankan Aplikasi Mobile Panda Biru
+- Install Flutter
+- Membuka project ini dan running dengan emulator android studio 
+- Maka berhasil dijalankan dan siap untuk dipakai
+- Terimakasih 
+
 # panda_biru
 
 A new Flutter project.
