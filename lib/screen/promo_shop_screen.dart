@@ -3,6 +3,8 @@ import 'package:panda_biru/model/store_model.dart';
 import 'package:panda_biru/model/promo_shop_model.dart';
 import 'package:panda_biru/services/promo_api.dart';
 import 'package:panda_biru/screen/list_shop_screen.dart';
+import 'package:panda_biru/theme/theme_color.dart';
+import 'package:panda_biru/theme/theme_text_style.dart';
 
 class PromoShopScreen extends StatefulWidget {
   final StoreModel store;
@@ -31,90 +33,113 @@ class _PromoShopScreenState extends State<PromoShopScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Tambah Promo"),
+          backgroundColor: ThemeColor().whiteColor,
+          title: Text("Tambah Promo", style:ThemeTextStyle().popupPromo),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Pilihan produk pakai RadioListTile
                 Column(
-                  children: productOptions.map((product) {
-                    return RadioListTile<String>(
-                      title: Text(product),
-                      value: product,
-                      groupValue: _selectedProduct,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedProduct = value;
-                        });
-                        Navigator.pop(context); // tutup dialog dulu
-                        _showAddPromoDialog(); // buka ulang biar refresh radio
-                      },
-                    );
-                  }).toList(),
-                ),
+  children: productOptions.map((product) {
+    return RadioListTile<String>(
+      title: Text(product, style: ThemeTextStyle().promoShop),
+      value: product,
+      groupValue: _selectedProduct,
+      activeColor: ThemeColor().blueColor, // warna ketika dipilih
+      onChanged: (value) {
+        setState(() {
+          _selectedProduct = value;
+        });
+        Navigator.pop(context); // tutup dialog dulu
+        _showAddPromoDialog(); // buka ulang biar refresh radio
+      },
+    );
+  }).toList(),
+),
+
                 const SizedBox(height: 10),
 
                 TextField(
                   controller: _normalPriceController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: "Harga Normal",
-                    border: OutlineInputBorder(),
-                  ),
+                    decoration: InputDecoration(
+    labelText: "Harga Normal",
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: ThemeColor().blueColor),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: ThemeColor().blueColor),
+    ),
+  ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 TextField(
                   controller: _promoPriceController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: "Harga Promo",
-                    border: OutlineInputBorder(),
-                  ),
+                   decoration: InputDecoration(
+    labelText: "Harga Promo",
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: ThemeColor().blueColor),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: ThemeColor().blueColor),
+    ),
+    )
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Batal"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (_selectedProduct == null ||
-                    _normalPriceController.text.isEmpty ||
-                    _promoPriceController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Lengkapi semua field")),
-                  );
-                  return;
-                }
+  TextButton(
+    onPressed: () => Navigator.pop(context),
+    child: Text("Batal",style: ThemeTextStyle().buttonPromo2),
+  ),
+  ElevatedButton(
+    onPressed: () async {
+      if (_selectedProduct == null ||
+          _normalPriceController.text.isEmpty ||
+          _promoPriceController.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Lengkapi semua field")),
+        );
+        return;
+      }
 
-                final promo = PromoModel(
-                  product: _selectedProduct!,
-                  normalPrice: int.parse(_normalPriceController.text),
-                  promoPrice: int.parse(_promoPriceController.text),
-                );
+      final promo = PromoModel(
+        product: _selectedProduct!,
+        normalPrice: int.parse(_normalPriceController.text),
+        promoPrice: int.parse(_promoPriceController.text),
+      );
 
-                final success = await _promoService
-                    .submitPromoReport(widget.store.id, [promo]);
+      final success = await _promoService
+          .submitPromoReport(widget.store.id, [promo]);
 
-                if (success && mounted) {
-                  Navigator.pop(context); // tutup dialog
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ListShopScreen()),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Gagal submit promo")),
-                  );
-                }
-              },
-              child: const Text("Submit"),
-            ),
-          ],
+      if (success && mounted) {
+        Navigator.pop(context); // tutup dialog
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ListShopScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Gagal submit promo")),
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: ThemeColor().blueColor, // warna button
+      foregroundColor: Colors.white,            // warna teks
+      minimumSize: const Size(80, 40),          // ukuran tombol
+    ),
+    child: Text("Submit", style: ThemeTextStyle().buttonPromo,),
+  ),
+],
+
         );
       },
     );
@@ -123,14 +148,48 @@ class _PromoShopScreenState extends State<PromoShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Promo - ${widget.store.name}")),
-      body: Center(
-        child: ElevatedButton.icon(
-          onPressed: _showAddPromoDialog,
-          icon: const Icon(Icons.add),
-          label: const Text("Add Promo"),
+     appBar: AppBar(
+        title: Text("Promo Toko",
+                  style: ThemeTextStyle().appBar,
+                ),
+        backgroundColor: ThemeColor().blueColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: ThemeColor().whiteColor),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
+      body: Padding(
+  padding: const EdgeInsets.all(20),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      // Informasi toko
+      Text(widget.store.name, style: ThemeTextStyle().storeName),
+      const SizedBox(height: 8),
+      Text("Kode : ${widget.store.code}", style: ThemeTextStyle().storeDetail),
+      Text("Alamat: ${widget.store.address}", style: ThemeTextStyle().storeDetail),
+      const Divider(height: 30),
+
+      const SizedBox(height: 20),
+
+      // Tombol Add Promo di bawah
+      SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: _showAddPromoDialog,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ThemeColor().blueColor,
+            foregroundColor: Colors.white,
+            minimumSize: const Size.fromHeight(50),
+          ),
+          child: Text("Add Promo", style: ThemeTextStyle().attendance),
+        ),
+      ),
+    ],
+  ),
+),
+
+
     );
   }
 }

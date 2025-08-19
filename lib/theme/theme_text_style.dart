@@ -68,4 +68,28 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w500,
     color: ThemeColor().grayColor,
   );
+
+  TextStyle popupPromo  = GoogleFonts.outfit(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
+
+  TextStyle promoShop  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
+
+  TextStyle buttonPromo  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().whiteColor,
+  );
+
+  TextStyle buttonPromo2  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
 }
