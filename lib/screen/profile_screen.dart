@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:panda_biru/screen/login_screen.dart';
+import 'package:panda_biru/theme/theme_color.dart';
+import 'package:panda_biru/theme/theme_text_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -43,31 +45,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Profile")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_username != null)
-              Text(
-                "Halo, $_username!",
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            if (_email != null)
-              Text(
-                "Email: $_email",
-                style: const TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _logout,
-              child: const Text("Logout"),
-            ),
-          ],
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: ThemeColor().whiteColor,
+    appBar: PreferredSize(
+      preferredSize: const Size.fromHeight(60.0),
+      child: AppBar(
+        backgroundColor: ThemeColor().blueColor,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Profile",
+          style: ThemeTextStyle().appBar,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(40),
+            bottomRight: Radius.circular(40),
+          ),
         ),
       ),
-    );
-  }
+    ),
+    body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Card dengan lebar penuh
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              color: ThemeColor().whiteColor,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: ThemeColor().blueColor),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    if (_username != null)
+                      Text(
+                        "Username : $_username",
+                        style: ThemeTextStyle().profile,
+                      ),
+                    if (_email != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        "Email : $_email",
+                       style: ThemeTextStyle().profile
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 30), // jarak card ke tombol
+
+          // Tombol Logout dengan lebar sama
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _logout,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ThemeColor().blueColor,
+                foregroundColor: Colors.white,
+                minimumSize: const Size.fromHeight(50),
+              ),
+              child: Text("Logout", style: ThemeTextStyle().profile2,),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+
 }

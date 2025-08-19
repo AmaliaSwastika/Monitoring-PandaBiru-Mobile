@@ -110,4 +110,16 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w600,
     color: ThemeColor().blueColor,
   );
+
+  TextStyle profile  = GoogleFonts.outfit(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
+
+  TextStyle profile2  = GoogleFonts.outfit(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().whiteColor,
+  );
 }
