@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       final result = await _attendanceService.postAttendance(
-        status: "present",
-        note: "Absen masuk kerja",
+        status: "Present",
+        note: "Absen Masuk Kerja",
       );
 
       setState(() {
