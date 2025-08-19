@@ -45,21 +45,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeColor().blueColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Panda Biru",
-              style: ThemeTextStyle().splash
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: ThemeColor().blueColor,
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/panda_logo/panda_logo.png',
+            width: 180, // sesuaikan ukuran
+            height: 180,
+          ),
+          // const SizedBox(height: 5),
+          Text(
+            "Panda Biru",
+            style: ThemeTextStyle().splash,
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

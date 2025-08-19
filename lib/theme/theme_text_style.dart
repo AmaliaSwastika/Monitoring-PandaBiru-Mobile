@@ -4,7 +4,7 @@ import 'package:panda_biru/theme/theme_color.dart';
 
 class ThemeTextStyle {
   TextStyle splash  = GoogleFonts.firaSans(
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: FontWeight.w600,
     color: ThemeColor().whiteColor,
   );

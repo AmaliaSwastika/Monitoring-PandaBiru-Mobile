@@ -4,7 +4,6 @@ import 'package:panda_biru/model/store_model.dart';
 import 'package:panda_biru/screen/detail_shop_screen.dart';
 import 'package:panda_biru/screen/navbar/navbar.dart';
 import 'package:panda_biru/services/store_api.dart';
-import 'package:panda_biru/screen/activity_screen.dart'; // <-- pastikan import ActivityScreen
 
 class ListShopScreen extends StatefulWidget {
   const ListShopScreen({super.key});
