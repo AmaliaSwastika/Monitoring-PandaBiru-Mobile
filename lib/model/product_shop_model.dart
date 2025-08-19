@@ -1,7 +1,7 @@
 class ProductModel {
   final String product;
   final String barcode;
-  bool available; // bisa diubah saat ceklis
+  bool available; 
 
   ProductModel({
     required this.product,

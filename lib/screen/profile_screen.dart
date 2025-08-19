@@ -41,8 +41,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final checkUsername = prefs.getString('username');
   final checkToken = prefs.getString('token');
   final checkEmail = prefs.getString('email');
+  // ignore: avoid_print
   print("DEBUG: username after logout = $checkUsername"); // harus null
+  // ignore: avoid_print
   print("DEBUG: token after logout = $checkToken");       // harus null
+  // ignore: avoid_print
   print("DEBUG: email after logout = $checkEmail");       // harus null
 
   // Navigasi ke LoginScreen dan hilangkan semua screen sebelumnya
@@ -54,35 +57,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   );
 }
 
-
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: ThemeColor().whiteColor,
-    appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-      child: AppBar(
-        backgroundColor: ThemeColor().blueColor,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Profile",
-          style: ThemeTextStyle().appBar,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40),
-            bottomRight: Radius.circular(40),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ThemeColor().whiteColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          backgroundColor: ThemeColor().blueColor,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Profile",
+            style: ThemeTextStyle().appBar,
+          ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40),
+            ),
           ),
         ),
       ),
-    ),
-    body: Padding(
+
+      body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Card dengan lebar penuh
           SizedBox(
             width: double.infinity,
             child: Card(
@@ -113,9 +115,7 @@ Widget build(BuildContext context) {
             ),
           ),
 
-          const SizedBox(height: 30), // jarak card ke tombol
-
-          // Tombol Logout dengan lebar sama
+          const SizedBox(height: 30), 
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -133,6 +133,4 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-
 }

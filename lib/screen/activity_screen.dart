@@ -17,7 +17,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   void initState() {
     super.initState();
-    _futureActivity = ActivityApi().getActivity();
+    _futureActivity = ActivityAPI().getActivity();
   }
 
   @override
@@ -56,93 +56,92 @@ class _ActivityScreenState extends State<ActivityScreen> {
           final act = snapshot.data!.summary.first;
 
           return Padding(
-  padding: const EdgeInsets.only(top: 25.0), // jarak dari AppBar
-  child: ListView(
-    children: [
-      // ================= Attendance Report =================
-      Card(
-        color: ThemeColor().whiteColor,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: ThemeColor().blueColor),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: const EdgeInsets.all(8),
-        child: ExpansionTile(
-          leading: Icon(Icons.access_time, color: ThemeColor().blueColor),
-          title: Text("Report Attendance", style: ThemeTextStyle().activityReport,),
-          children: act.attendanceData?.map((a) {
-                return ListTile(
-                  title: Text("Status : ${a.data.status}", style: ThemeTextStyle().activityReport2),
-                  subtitle: Text(
-                    "Note : ${a.data.note.isNotEmpty ? a.data.note : '-'}\n"
-                    "Created : ${a.createdAt}", style: ThemeTextStyle().activityReport2
-                  ),
-                );
-              }).toList() ??
-              [const ListTile(title: Text("No attendance data"))],
-        ),
-      ),
-
-      // ================= Shop Report =================
-      Card(
-        color: ThemeColor().whiteColor,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: ThemeColor().blueColor),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: const EdgeInsets.all(8),
-        child: ExpansionTile(
-          leading: Icon(Icons.store, color: ThemeColor().blueColor),
-          title: Text("Report Shop", style: ThemeTextStyle().activityReport,),
-          children: act.stores.map((s) {
-            return ExpansionTile(
-              leading: Icon(Icons.storefront, color: ThemeColor().blueColor),
-              title: Text(s.storeName, style: ThemeTextStyle().activityReport3),
-              subtitle: Text(
-                "Code: ${s.storeCode}\nAddress: ${s.storeAddress}",style: ThemeTextStyle().activityReport2
-              ),
-              children: [
-                // ----- Report Product -----
-                ExpansionTile(
-                  leading: Icon(Icons.shopping_bag, color: ThemeColor().blueColor),
-                  title: Text("Report Product",style: ThemeTextStyle().activityReport3),
-                  children: s.products.map((p) {
+          padding: const EdgeInsets.only(top: 25.0), 
+          child: ListView(
+            children: [
+            //report attendance
+              Card(
+                color: ThemeColor().whiteColor,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: ThemeColor().blueColor),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.all(8),
+                child: ExpansionTile(
+                  leading: Icon(Icons.access_time, color: ThemeColor().blueColor),
+                  title: Text("Report Attendance", style: ThemeTextStyle().activityReport,),
+                  children: act.attendanceData?.map((a) {
                     return ListTile(
-                      leading: Icon(
-                        p.available
-                            ? Icons.check_circle
-                            : Icons.remove_circle,
-                        color: p.available ? Colors.green : Colors.red,
+                      title: Text("Status : ${a.data.status}", style: ThemeTextStyle().activityReport2),
+                      subtitle: Text(
+                        "Note : ${a.data.note.isNotEmpty ? a.data.note : '-'}\n"
+                        "Created : ${a.createdAt}", style: ThemeTextStyle().activityReport2
                       ),
-                      title: Text(p.product, style: ThemeTextStyle().activityReport3),
+                    );
+                  }).toList() ??
+                  [const ListTile(title: Text("No attendance data"))],
+                ),
+              ),
+
+              //report shop
+              Card(
+                color: ThemeColor().whiteColor,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: ThemeColor().blueColor),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.all(8),
+                child: ExpansionTile(
+                  leading: Icon(Icons.store, color: ThemeColor().blueColor),
+                  title: Text("Report Shop", style: ThemeTextStyle().activityReport,),
+                  children: act.stores.map((s) {
+                    return ExpansionTile(
+                      leading: Icon(Icons.storefront, color: ThemeColor().blueColor),
+                      title: Text(s.storeName, style: ThemeTextStyle().activityReport3),
                       subtitle: Text(
+                        "Code: ${s.storeCode}\nAddress: ${s.storeAddress}",style: ThemeTextStyle().activityReport2
+                      ),
+                  children: [
+                  //report product
+                  ExpansionTile(
+                    leading: Icon(Icons.shopping_bag, color: ThemeColor().blueColor),
+                    title: Text("Report Product",style: ThemeTextStyle().activityReport3),
+                    children: s.products.map((p) {
+                      return ListTile(
+                        leading: Icon(
+                          p.available
+                          ? Icons.check_circle
+                          : Icons.remove_circle,
+                          color: p.available ? Colors.green : Colors.red,
+                       ),
+                        title: Text(p.product, style: ThemeTextStyle().activityReport3),
+                        subtitle: Text(
                           "Barcode: ${p.barcode ?? '-'}\nCreated: ${p.createdAt}", style: ThemeTextStyle().activityReport2),
-                    );
-                  }).toList(),
-                ),
+                      );
+                    }).toList(),
+                  ),
 
-                // ----- Report Promo -----
-                ExpansionTile(
-                  leading: Icon(Icons.local_offer, color: ThemeColor().blueColor),
-                  title: Text("Report Promo", style: ThemeTextStyle().activityReport3),
-                  children: s.promos.map((pr) {
-                    return ListTile(
-                      leading: const Icon(Icons.discount),
-                      title: Text(pr.product, style: ThemeTextStyle().activityReport3),
-                      subtitle: Text(
+                  //report promo
+                  ExpansionTile(
+                    leading: Icon(Icons.local_offer, color: ThemeColor().blueColor),
+                    title: Text("Report Promo", style: ThemeTextStyle().activityReport3),
+                    children: s.promos.map((pr) {
+                      return ListTile(
+                       leading: const Icon(Icons.discount),
+                        title: Text(pr.product, style: ThemeTextStyle().activityReport3),
+                        subtitle: Text(
                           "Normal: Rp ${pr.normalPrice}\nPromo: Rp ${pr.promoPrice}\nCreated: ${pr.createdAt}", style: ThemeTextStyle().activityReport2),
-                    );
-                  }).toList(),
-                ),
-              ],
-            );
-          }).toList(),
-        ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
+        ],
       ),
-    ],
-  ),
-);
-
+    );
         },
       ),
     );

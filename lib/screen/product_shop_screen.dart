@@ -17,9 +17,7 @@ class ProductShopScreen extends StatefulWidget {
 
 class _ProductShopScreenState extends State<ProductShopScreen> {
   late int storeId;
-  final ProductService _productService = ProductService();
-
-  // Dummy produk, bisa juga diambil dari API lain kalau ada
+  final ProductAPI _productAPI = ProductAPI();
   final List<ProductModel> products = [
     ProductModel(product: "Keripik Kentang Xie-xie 250mL", barcode: "1234567890123"),
     ProductModel(product: "Biskuit Kelapa Ni-hao 100mL", barcode: "2345678901234"),
@@ -33,58 +31,54 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
   }
 
   Future<void> _submitReport() async {
-  try {
-    final success = await _productService.submitProductReport(storeId, products);
-    if (success) {
-      // Tampilkan snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Laporan produk berhasil dikirim!")),
-      );
-
-      // Arahkan ke DetailShopScreen, sambil mengganti halaman saat ini
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => DetailShopScreen(store: widget.store),
-          ),
+    try {
+      final success = await _productAPI.submitProductReport(storeId, products);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Laporan produk berhasil dikirim!")),
         );
-      });
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DetailShopScreen(store: widget.store),
+            ),
+          );
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error: $e")),
-    );
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeColor().whiteColor,
       appBar: AppBar(
-        title: Text("Product Toko",
-                  style: ThemeTextStyle().appBar,
-                ),
+        title: Text(
+          "Product Toko",
+          style: ThemeTextStyle().appBar,
+        ),
         backgroundColor: ThemeColor().blueColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: ThemeColor().whiteColor),
           onPressed: () => Navigator.pop(context),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.store.name,
-                style:ThemeTextStyle().storeName),
+            Text(widget.store.name,style:ThemeTextStyle().storeName),
             const SizedBox(height: 8),
             Text("Kode : ${widget.store.code}", style:ThemeTextStyle().storeDetail),
             Text("Alamat: ${widget.store.address}", style:ThemeTextStyle().storeDetail),
             const Divider(height: 30),
-
             Expanded(
               child: ListView.builder(
                 itemCount: products.length,
@@ -105,19 +99,17 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
               ),
             ),
 
-
            ElevatedButton(
-  onPressed: _submitReport,
-  style: ElevatedButton.styleFrom(
-    backgroundColor: ThemeColor().blueColor, // warna button
-    minimumSize: const Size.fromHeight(50), // tinggi tombol
-  ),
-  child: Text(
-    "Submit Laporan",
-    style: ThemeTextStyle().attendance
-  ),
-),
-
+            onPressed: _submitReport,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ThemeColor().blueColor, 
+              minimumSize: const Size.fromHeight(50), 
+            ),
+            child: Text(
+              "Submit Laporan",
+              style: ThemeTextStyle().attendance
+            ),
+          ),
           ],
         ),
       ),

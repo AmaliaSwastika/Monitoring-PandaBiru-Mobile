@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
-
+import 'package:panda_biru/helper/shared_preferences.dart';
 import 'package:panda_biru/model/product_shop_model.dart';
 import 'package:panda_biru/services/secret/constant.dart';
 
-
-import '../helper/shared_preferences.dart';
-
-class ProductService {
+class ProductAPI {
   final Dio _dio = Dio();
 
   Future<bool> submitProductReport(int storeId, List<ProductModel> products) async {
@@ -16,6 +13,7 @@ class ProductService {
       throw Exception("Token tidak ditemukan. Silakan login ulang.");
     }
 
+    // ignore: prefer_const_declarations
     final url = "${APIConstant.baseUrl}/report/product";
 
     final body = {

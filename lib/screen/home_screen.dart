@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AttendanceService _attendanceService = AttendanceService();
+  final AttendanceAPI _attendanceAPI = AttendanceAPI();
   bool _loading = false;
   AttendanceModel? _attendance;
 
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final result = await _attendanceService.postAttendance(
+      final result = await _attendanceAPI.postAttendance(
         status: "Present",
         note: "Absen Masuk Kerja",
       );

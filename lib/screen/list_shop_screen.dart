@@ -15,13 +15,13 @@ class ListShopScreen extends StatefulWidget {
 }
 
 class _ListShopScreenState extends State<ListShopScreen> {
-  final StoreService _storeService = StoreService();
+  final StoreAPI _storeAPI = StoreAPI();
   late Future<List<StoreModel>> _futureStores;
 
   @override
   void initState() {
     super.initState();
-    _futureStores = _storeService.getStores();
+    _futureStores = _storeAPI.getStores();
   }
 
   @override
@@ -61,79 +61,77 @@ class _ListShopScreenState extends State<ListShopScreen> {
                   itemBuilder: (context, index) {
                     final store = stores[index];
                    return Card(
-  color: ThemeColor().whiteColor,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
-    side: BorderSide(
-      color: ThemeColor().blueColor, // warna border
-      width: 1, // ketebalan border
-    ),
-  ),
-  margin: const EdgeInsets.only(bottom: 12),
-  child: ListTile(
-    title: Text(
-      store.name,
-      style: ThemeTextStyle().storeName
-    ),
-    subtitle: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Kode: ${store.code}", style: ThemeTextStyle().storeDetail,),
-        Text("Alamat: ${store.address}", style: ThemeTextStyle().storeDetail,),
-      ],
-    ),
-    leading: Icon(Icons.store, color: ThemeColor().blueColor),
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetailShopScreen(store: store),
-        ),
-      );
-    },
-  ),
-);
-
-                  },
+                    color: ThemeColor().whiteColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: ThemeColor().blueColor, 
+                        width: 1, // ketebalan border
+                      ),
+                   ),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  child: ListTile(
+                    title: Text(
+                      store.name,
+                      style: ThemeTextStyle().storeName
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Kode: ${store.code}", style: ThemeTextStyle().storeDetail,),
+                        Text("Alamat: ${store.address}", style: ThemeTextStyle().storeDetail,),
+                      ],
+                    ),
+                    leading: Icon(Icons.store, color: ThemeColor().blueColor),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailShopScreen(store: store),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
+            );
+          },
+        ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ThemeColor().blueColor,
+                padding: const EdgeInsets.symmetric(vertical: 15),
+              ),
+              onPressed: () async {
+                final username = await SharedPrefHelper.getUsername();
+
+                if (!mounted) return;
+
+                // Navigator push replacement + hapus semua halaman sebelumnya
+                Navigator.pushAndRemoveUntil(
+                   context,
+                  MaterialPageRoute(
+                    builder: (_) => NavBar(
+                      username: username ?? "Guest",
+                      initialIndex: 1, //langsung activity
+                    ),
+                  ),
+                  (route) => false, 
+                );
+              },
+              child: Text(
+                "Sudah Selesai Monitoring",
+                style: ThemeTextStyle().attendance,
+              ),
             ),
           ),
-          Padding(
-  padding: const EdgeInsets.all(16.0),
-  child: SizedBox(
-    width: double.infinity,
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ThemeColor().blueColor,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-      ),
-      onPressed: () async {
-        final username = await SharedPrefHelper.getUsername();
-
-        if (!mounted) return;
-
-        // Navigator push replacement + hapus semua halaman sebelumnya
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (_) => NavBar(
-              username: username ?? "Guest",
-              initialIndex: 1, // langsung ke Activity tab
-            ),
-          ),
-          (route) => false, // hapus semua halaman sebelumnya
-        );
-      },
-      child: Text(
-        "Sudah Selesai Monitoring",
-        style: ThemeTextStyle().attendance,
-      ),
-    ),
-  ),
-),
-
-          
+        ),
         ],
       ),
     );

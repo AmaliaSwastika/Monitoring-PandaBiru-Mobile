@@ -7,12 +7,12 @@ import 'package:panda_biru/theme/theme_color.dart';
 
 class NavBar extends StatefulWidget {
   final String username;
-  final int initialIndex; // <-- tambahin
+  final int initialIndex; 
 
   const NavBar({
     super.key,
     required this.username,
-    this.initialIndex = 0, // default tetap Home
+    this.initialIndex = 0, 
   });
 
   @override
@@ -21,12 +21,12 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   late List<Widget> halaman;
-  late int selectedIndex;
+  late int selectedIndex; // default home
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = widget.initialIndex; // <-- ambil dari parameter
+    selectedIndex = widget.initialIndex; // ambil dari parameter
     halaman = [
       HomeScreen(username: widget.username),
       const ActivityScreen(),
@@ -41,34 +41,33 @@ class _NavBarState extends State<NavBar> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: ThemeColor().whiteColor,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage(NavBarImageIcon.home_NavbarIcon)),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage(NavBarImageIcon.activity_NavbarIcon)),
-          label: 'Activity',
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage(NavBarImageIcon.profile_NavbarIcon)),
-          label: 'Profile',
-        ),
-      ],
-      currentIndex: selectedIndex,
-      selectedItemColor: ThemeColor().blueColor,
-      type: BottomNavigationBarType.fixed,
-      onTap: selectPage,
-    ),
-    body: IndexedStack(
-      index: selectedIndex,
-      children: halaman,
-    ),
-  );
-}
-
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: ThemeColor().whiteColor,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage(NavBarImageIcon.home_NavbarIcon)),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage(NavBarImageIcon.activity_NavbarIcon)),
+            label: 'Activity',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage(NavBarImageIcon.profile_NavbarIcon)),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: ThemeColor().blueColor,
+        type: BottomNavigationBarType.fixed,
+        onTap: selectPage,
+      ),
+      body: IndexedStack(
+        index: selectedIndex,
+        children: halaman,
+      ),
+    );
+  }
 }

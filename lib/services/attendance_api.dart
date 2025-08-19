@@ -3,7 +3,7 @@ import 'package:panda_biru/services/secret/constant.dart';
 import 'package:panda_biru/model/attendance_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AttendanceService {
+class AttendanceAPI {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: APIConstant.baseUrl,

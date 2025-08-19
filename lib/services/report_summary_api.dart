@@ -3,7 +3,7 @@ import 'package:panda_biru/helper/shared_preferences.dart';
 import 'package:panda_biru/model/report_summary_model.dart';
 import 'package:panda_biru/services/secret/constant.dart';
 
-class ActivityApi {
+class ActivityAPI {
   final Dio _dio = Dio();
 
   Future<ActivityResponse> getActivity() async {

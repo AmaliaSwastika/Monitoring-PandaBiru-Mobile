@@ -3,7 +3,7 @@ import 'package:panda_biru/helper/shared_preferences.dart';
 import 'package:panda_biru/model/promo_shop_model.dart';
 import 'package:panda_biru/services/secret/constant.dart';
 
-class PromoService {
+class PromoAPI {
   final Dio _dio = Dio();
 
   Future<bool> submitPromoReport(int storeId, List<PromoModel> promos) async {

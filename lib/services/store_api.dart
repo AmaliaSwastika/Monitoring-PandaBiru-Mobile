@@ -3,7 +3,7 @@ import 'package:panda_biru/model/store_model.dart';
 import 'package:panda_biru/services/secret/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StoreService {
+class StoreAPI {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: APIConstant.baseUrl,

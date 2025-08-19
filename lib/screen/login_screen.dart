@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:panda_biru/model/login_model.dart';
 import 'package:panda_biru/screen/navbar/navbar.dart';
 import 'package:panda_biru/services/login_api.dart';
 import 'package:panda_biru/theme/theme_text_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:panda_biru/theme/theme_color.dart';
-import 'package:panda_biru/model/login_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,9 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _loading = false;
   String? _error;
-  bool _obscurePassword = true; // untuk toggle password
+  bool _obscurePassword = true;
 
-  final ApiService _apiService = ApiService();
+  final LoginAPI _loginAPI = LoginAPI();
 
   Future<void> _handleLogin() async {
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -36,24 +36,26 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      UserModel user = await _apiService.login(
+      LoginModel user = await _loginAPI.login(
         _usernameController.text,
         _passwordController.text,
       );
 
       final prefs = await SharedPreferences.getInstance();
-await prefs.setString('username', user.username);
-await prefs.setString('token', user.token);
-await prefs.setString('email', user.email);
+      await prefs.setString('username', user.username);
+      await prefs.setString('token', user.token);
+      await prefs.setString('email', user.email);
 
-// Debug print
-final checkUsername = prefs.getString('username');
-final checkToken = prefs.getString('token');
-final checkEmail = prefs.getString('email');
-print("DEBUG: username saved = $checkUsername"); // harus sama dengan user.username
-print("DEBUG: token saved = $checkToken");       // harus sama dengan user.token
-print("DEBUG: email saved = $checkEmail");       // harus sama dengan user.email
-
+      // Debug print
+      final checkUsername = prefs.getString('username');
+      final checkToken = prefs.getString('token');
+      final checkEmail = prefs.getString('email');
+      // ignore: avoid_print
+      print("DEBUG: username saved = $checkUsername"); 
+      // ignore: avoid_print
+      print("DEBUG: token saved = $checkToken");       
+      // ignore: avoid_print
+      print("DEBUG: email saved = $checkEmail");     
 
       if (!mounted) return;
       Navigator.pushReplacement(
@@ -87,7 +89,6 @@ print("DEBUG: email saved = $checkEmail");       // harus sama dengan user.email
                 width: 150,
                 height: 150,
               ),
-              // const SizedBox(height: 5),
               Text(
                 "Login",
                 style: ThemeTextStyle().login
@@ -100,49 +101,48 @@ print("DEBUG: email saved = $checkEmail");       // harus sama dengan user.email
               ),
               const SizedBox(height: 30),
               TextField(
-  controller: _usernameController,
-  decoration: InputDecoration(
-    labelText: "Username",
-    prefixIcon: Icon(Icons.person, color: ThemeColor().blueColor),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: ThemeColor().blueColor),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: ThemeColor().blueColor),
-    ),
-  ),
-),
-const SizedBox(height: 20),
-TextField(
-  controller: _passwordController,
-  obscureText: _obscurePassword,
-  decoration: InputDecoration(
-    labelText: "Password",
-    prefixIcon: Icon(Icons.lock, color: ThemeColor().blueColor),
-    suffixIcon: IconButton(
-      icon: Icon(
-        _obscurePassword ? Icons.visibility_off : Icons.visibility,
-        color: ThemeColor().blueColor, // ubah warna mata
-      ),
-      onPressed: () {
-        setState(() {
-          _obscurePassword = !_obscurePassword;
-        });
-      },
-    ),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: ThemeColor().blueColor),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: ThemeColor().blueColor),
-    ),
-  ),
-),
-
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: "Username",
+                  prefixIcon: Icon(Icons.person, color: ThemeColor().blueColor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: ThemeColor().blueColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: ThemeColor().blueColor),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  prefixIcon: Icon(Icons.lock, color: ThemeColor().blueColor),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      color: ThemeColor().blueColor, 
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: ThemeColor().blueColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: ThemeColor().blueColor),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               if (_error != null)
                 Text(
