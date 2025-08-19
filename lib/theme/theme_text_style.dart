@@ -27,13 +27,17 @@ class ThemeTextStyle {
     color: ThemeColor().whiteColor,
   );
 
+  TextStyle appBar  = GoogleFonts.outfit(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().whiteColor,
+  );
+
   TextStyle welcomeUsername  = GoogleFonts.outfit(
     fontSize: 21,
     fontWeight: FontWeight.w600,
     color: ThemeColor().blueColor,
   );
-
-  
 
   TextStyle attendance  = GoogleFonts.outfit(
     fontSize: 16,
@@ -51,5 +55,17 @@ class ThemeTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: ThemeColor().blueColor,
+  );
+
+  TextStyle storeName  = GoogleFonts.outfit(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: ThemeColor().blueColor,
+  );
+
+  TextStyle storeDetail  = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: ThemeColor().grayColor,
   );
 }
