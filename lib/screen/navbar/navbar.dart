@@ -41,36 +41,34 @@ class _NavBarState extends State<NavBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: ThemeColor().whiteColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage(NavBarImageIcon.home_NavbarIcon),
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage(NavBarImageIcon.activity_NavbarIcon),
-            ),
-            label: 'Activity',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage(NavBarImageIcon.profile_NavbarIcon),
-            ),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: selectedIndex,
-        selectedItemColor: ThemeColor().blueColor,
-        type: BottomNavigationBarType.fixed,
-        onTap: selectPage,
-      ),
-      body: halaman.elementAt(selectedIndex),
-    );
-  }
+Widget build(BuildContext context) {
+  return Scaffold(
+    bottomNavigationBar: BottomNavigationBar(
+      backgroundColor: ThemeColor().whiteColor,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: ImageIcon(AssetImage(NavBarImageIcon.home_NavbarIcon)),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(AssetImage(NavBarImageIcon.activity_NavbarIcon)),
+          label: 'Activity',
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(AssetImage(NavBarImageIcon.profile_NavbarIcon)),
+          label: 'Profile',
+        ),
+      ],
+      currentIndex: selectedIndex,
+      selectedItemColor: ThemeColor().blueColor,
+      type: BottomNavigationBarType.fixed,
+      onTap: selectPage,
+    ),
+    body: IndexedStack(
+      index: selectedIndex,
+      children: halaman,
+    ),
+  );
+}
+
 }

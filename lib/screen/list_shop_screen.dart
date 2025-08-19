@@ -100,35 +100,39 @@ class _ListShopScreenState extends State<ListShopScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ThemeColor().blueColor,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                onPressed: () async {
-                  final username = await SharedPrefHelper.getUsername(); // ambil dari shared pref
+  padding: const EdgeInsets.all(16.0),
+  child: SizedBox(
+    width: double.infinity,
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ThemeColor().blueColor,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+      ),
+      onPressed: () async {
+        final username = await SharedPrefHelper.getUsername();
 
-                  if (!mounted) return; // safety
+        if (!mounted) return;
 
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => NavBar(
-                        username: username ?? "Guest", // fallback kalau null
-                        initialIndex: 1, // langsung ke Activity tab
-                      ),
-                    ),
-                  );
-                },
-                child: Text(
-                  "Sudah Selesai Monitoring",
-                  style: ThemeTextStyle().attendance,),
-                ),
-              ),
+        // Navigator push replacement + hapus semua halaman sebelumnya
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (_) => NavBar(
+              username: username ?? "Guest",
+              initialIndex: 1, // langsung ke Activity tab
             ),
+          ),
+          (route) => false, // hapus semua halaman sebelumnya
+        );
+      },
+      child: Text(
+        "Sudah Selesai Monitoring",
+        style: ThemeTextStyle().attendance,
+      ),
+    ),
+  ),
+),
+
           
         ],
       ),
