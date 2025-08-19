@@ -29,9 +29,9 @@ class _DetailShopScreenState extends State<DetailShopScreen> {
     return Scaffold(
       backgroundColor: ThemeColor().whiteColor,
       appBar: AppBar(
-        // title: Text(widget.store.name,
-        //           style: ThemeTextStyle().appBar,
-        //         ),
+        title: Text("Detail Toko",
+                  style: ThemeTextStyle().appBar,
+                ),
         backgroundColor: ThemeColor().blueColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: ThemeColor().whiteColor),

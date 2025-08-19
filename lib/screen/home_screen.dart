@@ -57,20 +57,24 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: ThemeColor().whiteColor,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
-        child: AppBar(
-          backgroundColor: ThemeColor().blueColor,
-          elevation: 0,
-          centerTitle: true,
-          title: null,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40),
-            ),
-          ),
-        ),
+  preferredSize: const Size.fromHeight(60.0),
+  child: AppBar(
+    backgroundColor: ThemeColor().blueColor,
+    elevation: 0,
+    centerTitle: true,
+    title: Text(
+      "Attendance",
+      style: ThemeTextStyle().appBar,
+    ),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(40),
+        bottomRight: Radius.circular(40),
       ),
+    ),
+  ),
+),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

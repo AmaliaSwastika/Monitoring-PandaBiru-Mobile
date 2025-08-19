@@ -3,6 +3,8 @@ import 'package:panda_biru/model/product_shop_model.dart';
 import 'package:panda_biru/model/store_model.dart';
 import 'package:panda_biru/screen/detail_shop_Screen.dart';
 import 'package:panda_biru/services/product_shop_api.dart';
+import 'package:panda_biru/theme/theme_color.dart';
+import 'package:panda_biru/theme/theme_text_style.dart';
 
 class ProductShopScreen extends StatefulWidget {
   final StoreModel store;
@@ -60,17 +62,27 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Product Toko")),
+      backgroundColor: ThemeColor().whiteColor,
+      appBar: AppBar(
+        title: Text("Product Toko",
+                  style: ThemeTextStyle().appBar,
+                ),
+        backgroundColor: ThemeColor().blueColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: ThemeColor().whiteColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.store.name,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                style:ThemeTextStyle().storeName),
             const SizedBox(height: 8),
-            Text("Kode Toko: ${widget.store.code}"),
-            Text("Alamat: ${widget.store.address}"),
+            Text("Kode : ${widget.store.code}", style:ThemeTextStyle().storeDetail),
+            Text("Alamat: ${widget.store.address}", style:ThemeTextStyle().storeDetail),
             const Divider(height: 30),
 
             Expanded(
@@ -79,9 +91,10 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return CheckboxListTile(
-                    title: Text(product.product),
-                    subtitle: Text("Barcode: ${product.barcode}"),
+                    title: Text(product.product, style:ThemeTextStyle().storeName),
+                    subtitle: Text("Barcode: ${product.barcode}", style:ThemeTextStyle().storeDetail),
                     value: product.available,
+                    activeColor: ThemeColor().blueColor,
                     onChanged: (value) {
                       setState(() {
                         product.available = value ?? false;
@@ -92,11 +105,19 @@ class _ProductShopScreenState extends State<ProductShopScreen> {
               ),
             ),
 
-            ElevatedButton.icon(
-              onPressed: _submitReport,
-              icon: const Icon(Icons.send),
-              label: const Text("Kirim Laporan"),
-            ),
+
+           ElevatedButton(
+  onPressed: _submitReport,
+  style: ElevatedButton.styleFrom(
+    backgroundColor: ThemeColor().blueColor, // warna button
+    minimumSize: const Size.fromHeight(50), // tinggi tombol
+  ),
+  child: Text(
+    "Submit Laporan",
+    style: ThemeTextStyle().attendance
+  ),
+),
+
           ],
         ),
       ),
