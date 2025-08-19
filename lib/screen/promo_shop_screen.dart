@@ -182,9 +182,28 @@ class _PromoShopScreenState extends State<PromoShopScreen> {
               child: Text("Add Promo", style: ThemeTextStyle().attendance),
             ),
           ),
-        ],
-      ),
+
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ListShopScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ThemeColor().blueColor,// bisa ganti sesuai tema
+                foregroundColor: Colors.white,
+              minimumSize: const Size.fromHeight(50),
+            ),
+            child: Text("Tidak Ada Promo", style: ThemeTextStyle().attendance),
+          ),
+        ),
+      ],
     ),
+    )
     );
   }
 }
