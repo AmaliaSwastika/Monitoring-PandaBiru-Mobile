@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:panda_biru/screen/list_shop_screen.dart';
 import 'package:panda_biru/services/attendance_api.dart';
 import 'package:panda_biru/model/attendance_model.dart';
+import 'package:panda_biru/theme/theme_color.dart';
+import 'package:panda_biru/theme/theme_text_style.dart';
 
 class HomeScreen extends StatefulWidget {
   final String username;
@@ -53,47 +55,79 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Home")),
+      backgroundColor: ThemeColor().whiteColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: AppBar(
+          backgroundColor: ThemeColor().blueColor,
+          elevation: 0,
+          centerTitle: true,
+          title: null,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40),
+            ),
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Halo, ${widget.username}!",
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              "Halo! ${widget.username}",
+              style: ThemeTextStyle().welcomeUsername
             ),
             const SizedBox(height: 20),
             _loading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ThemeColor().blueColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    ),
                     onPressed: _attendance != null ? null : _handleAttendance,
-                    child: const Text("Absen Masuk Kerja"),
+                    child: Text(
+                      _attendance != null ? "Anda sudah absen" : "Absen Masuk Kerja",
+                      style: ThemeTextStyle().attendance,
+                    ),
                   ),
             const SizedBox(height: 20),
             if (_attendance != null) ...[
               Text(
                 "Anda sudah absen : ${_attendance!.createdAt}",
-                style: const TextStyle(fontSize: 16, color: Colors.green),
+                style: ThemeTextStyle().attendanceSuccess,
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 "Silahkan masuk kerja",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: ThemeTextStyle().attendanceSuccess2,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ThemeColor().blueColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                ),
                 onPressed: _goToShopList,
-                child: const Text("Daftar Toko"),
+                child: Text(
+                  "Daftar Toko",
+                  style: ThemeTextStyle().attendance,
+                ),
               ),
             ] else ...[
-              // Kalau belum absen, tombol daftar toko disabled
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
-                child: const Text("Daftar Toko"),
+                onPressed: null,
+                child: Text(
+                  "Daftar Toko",
+                  style: ThemeTextStyle().attendance,
+                ),
               ),
             ],
           ],

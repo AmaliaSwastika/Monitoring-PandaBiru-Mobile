@@ -26,4 +26,30 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w600,
     color: ThemeColor().whiteColor,
   );
+
+  TextStyle welcomeUsername  = GoogleFonts.outfit(
+    fontSize: 21,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
+
+  
+
+  TextStyle attendance  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().whiteColor,
+  );
+
+  TextStyle attendanceSuccess  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().greenColor,
+  );
+
+  TextStyle attendanceSuccess2  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
 }
