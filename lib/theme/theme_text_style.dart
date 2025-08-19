@@ -92,4 +92,22 @@ class ThemeTextStyle {
     fontWeight: FontWeight.w600,
     color: ThemeColor().blueColor,
   );
+
+  TextStyle activityReport  = GoogleFonts.outfit(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: ThemeColor().blueColor,
+  );
+
+  TextStyle activityReport2  = GoogleFonts.outfit(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: ThemeColor().grayColor,
+  );
+
+  TextStyle activityReport3  = GoogleFonts.outfit(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    color: ThemeColor().blueColor,
+  );
 }
