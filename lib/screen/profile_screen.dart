@@ -30,19 +30,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    await prefs.remove('token');
-    await prefs.remove('email');
+  final prefs = await SharedPreferences.getInstance();
+  
+  // Hapus data
+  await prefs.remove('username');
+  await prefs.remove('token');
+  await prefs.remove('email');
 
-    // Navigasi ke LoginScreen dan hilangkan semua screen sebelumnya
-    if (!mounted) return;
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-      (route) => false,
-    );
-  }
+  // Debug print
+  final checkUsername = prefs.getString('username');
+  final checkToken = prefs.getString('token');
+  final checkEmail = prefs.getString('email');
+  print("DEBUG: username after logout = $checkUsername"); // harus null
+  print("DEBUG: token after logout = $checkToken");       // harus null
+  print("DEBUG: email after logout = $checkEmail");       // harus null
+
+  // Navigasi ke LoginScreen dan hilangkan semua screen sebelumnya
+  if (!mounted) return;
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (_) => const LoginScreen()),
+    (route) => false,
+  );
+}
+
 
   @override
 Widget build(BuildContext context) {

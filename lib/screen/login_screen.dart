@@ -42,9 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('username', user.username);
-      await prefs.setString('token', user.token);
-      await prefs.setString('email', user.email);
+await prefs.setString('username', user.username);
+await prefs.setString('token', user.token);
+await prefs.setString('email', user.email);
+
+// Debug print
+final checkUsername = prefs.getString('username');
+final checkToken = prefs.getString('token');
+final checkEmail = prefs.getString('email');
+print("DEBUG: username saved = $checkUsername"); // harus sama dengan user.username
+print("DEBUG: token saved = $checkToken");       // harus sama dengan user.token
+print("DEBUG: email saved = $checkEmail");       // harus sama dengan user.email
+
 
       if (!mounted) return;
       Navigator.pushReplacement(
