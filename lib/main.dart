@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:panda_biru/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:panda_biru/screen/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
